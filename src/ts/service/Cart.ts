@@ -12,11 +12,10 @@ export default class Cart {
     }
 
     getSum(): number {
-        let sum: number = 0;
-        for (let i: number = 0; i < this._items.length; i++) {
-          sum += this._items[i].price;
-        }
-      return sum;
+        return [...this.items].reduce(
+          function (accumulator, currentItem) {
+            return accumulator + currentItem.price;
+          }, 0)
     }
 
     getDiscountSum(discount: number): number {
@@ -24,7 +23,6 @@ export default class Cart {
     }
 
     remove(id: number): void {
-      let filteredItems: Buyable[] = this._items.filter((delObj) => delObj.id !== id);
-      [...this._items] = filteredItems;
+      this._items = this._items.filter((item: Buyable) => item.id !== id);
     }
 }
